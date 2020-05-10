@@ -191,22 +191,33 @@ LinkedList.prototype.reverse = function(){
 //    - mazoUserB = [6,9,10,3,6,4]
 
 var cardGame = function(mazoUserA, mazoUserB){
- /* while(mazoUserA.size()>0 || mazoUserB.size()>0){
-    if(mazoUserA.dequeue() > mazoUserB.dequeue()){
-      mazoUserA.enqueue(mazoUserA.dequeue())
-      mazoUserA.enqueue(mazoUserB.dequeue())
-    }else{
-      mazoUserB.enqueue(mazoUserA.dequeue())
-      mazoUserB.enqueue(mazoUserB.dequeue())
-    }
-    
+  //var newQ = new Queue();
+  var cont = mazoUserB.size()
+  var sumaA = 0;
+  var sumaB = 0;
+  while(cont > 0){
+    var tempA = mazoUserA.dequeue();
+    var tempB = mazoUserB.dequeue()
+   if(tempA > tempB){
+    mazoUserA.size() >= 0 && mazoUserA.enqueue(tempA);
+    mazoUserB.size() >= 0 && mazoUserA.enqueue(tempB);
+    sumaA = sumaA + tempA + tempB;
+   }
+   else if(tempA < tempB){
+    mazoUserB.size() >= 0 && mazoUserB.enqueue(tempB);
+    mazoUserA.size() >= 0 && mazoUserB.enqueue(tempA);
+    sumaB = sumaB + tempA + tempB;
+   }
+   cont --;
   }
-  if(mazoUserA.size()===0){
+  if(sumaA > sumaB){
+    return 'A wins!'
+  }else if(sumaA < sumaB){
     return 'B wins!'
   }else{
-    return 'A wins!'
+    return 'Game tie!'
   }
-*/
+  
 }
 
 // ---------------
