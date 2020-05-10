@@ -58,7 +58,19 @@ var objContains = function(obj, prop, value){
 // [Para más información del método: https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Array/isArray]
 
 var countArray = function(array){
-  
+  var suma = function(cb){
+      return cb;
+  }
+  var resultado = 0;
+  for(let i = 0; i < array.length; i++){
+      if(Array.isArray(array[i])){
+        resultado = resultado + suma(countArray(array[i]));
+      }else{
+        resultado = resultado + array[i]
+      }
+      
+  }
+  return resultado;
 }
 
 // ---------------------
@@ -78,7 +90,18 @@ var countArray = function(array){
 //    lista.size(); --> 3
 
 LinkedList.prototype.size = function(){
- 
+  if(!this.head){
+    return 0;
+  }
+  else{
+      var cont = 1;
+      current = this.head;
+      while(current.next){
+          cont++;
+          current = current.next;
+      }
+      return cont;
+  }
 }
 
 
@@ -99,7 +122,26 @@ LinkedList.prototype.size = function(){
 //    sin antes tener cargada la posición 0 y 1.
 
 LinkedList.prototype.addInPos = function(pos, value){
-  
+
+  if(pos < 0 || pos > this.size()){
+    return false;
+  }
+  var node = new Node(value);
+  var current = this.head;
+  var prev = null;
+
+  if(pos === 0){
+    this.node.next = current;
+    this.head = node;
+  }else{
+    for (var i = 0; i < pos; i++){
+      prev = current;
+      current = current.next;
+    }
+    node.next = current;
+    prev.next = node;
+  }
+  return true;
 }
 
 // EJERCICIO 5
@@ -110,6 +152,14 @@ LinkedList.prototype.addInPos = function(pos, value){
 //    Lista nueva luego de aplicar el reverse: Head --> 13 --> 10 --> 4 --> 1 --> null
 
 LinkedList.prototype.reverse = function(){
+  if(this.size() === 1){
+    return this;
+  }
+  list = new LinkedList()
+    while(this.size() > 0){
+      list.add(this.remove())
+    }
+   return list;
  
 }
 
@@ -141,7 +191,22 @@ LinkedList.prototype.reverse = function(){
 //    - mazoUserB = [6,9,10,3,6,4]
 
 var cardGame = function(mazoUserA, mazoUserB){
-
+ /* while(mazoUserA.size()>0 || mazoUserB.size()>0){
+    if(mazoUserA.dequeue() > mazoUserB.dequeue()){
+      mazoUserA.enqueue(mazoUserA.dequeue())
+      mazoUserA.enqueue(mazoUserB.dequeue())
+    }else{
+      mazoUserB.enqueue(mazoUserA.dequeue())
+      mazoUserB.enqueue(mazoUserB.dequeue())
+    }
+    
+  }
+  if(mazoUserA.size()===0){
+    return 'B wins!'
+  }else{
+    return 'A wins!'
+  }
+*/
 }
 
 // ---------------
@@ -185,6 +250,35 @@ var generateBST = function(array){
 
 
 var binarySearch = function (array, target) {
+        
+  if(array.length < 1){
+    return -1
+  }else if(array.length === 1){
+      return 0;
+  }
+  else{
+    var primero = 0;
+    var ultimo = array.length -1;
+    
+    while (primero <= ultimo){
+      var medio = Math.floor((primero + ultimo) / 2)
+      var valorCentral = array[medio]
+      if(target === valorCentral){
+          
+          return medio;
+        
+      }else if(target < array[medio]){
+          ultimo = medio -1;
+          
+      }
+      else{
+        primero = medio + 1;  
+      }
+      
+    }
+    
+  }
+  return -1;
 
   
 }
@@ -199,6 +293,19 @@ var binarySearch = function (array, target) {
 
 
 var selectionSort = function(array) {
+
+  for(let i = 0; i < array.length; i ++){
+    let min = i
+    for(let j = i+1; j < array.length; j++){
+        if(array[j] < array[min]){
+            min = j
+        }
+    }
+    let aux = array[min];
+    array[min] = array[i];
+    array[i] = aux;
+    }
+    return array;
   
 }
 
@@ -217,6 +324,10 @@ var selectionSort = function(array) {
 //    sumaDiez(11); --> Devolverá 21 (Ya que 11 + 10 = 21)
 
 function closureSum(numFijo) {
+  return function (num){
+    return numFijo + num;
+  }
+  
  
 }
 
